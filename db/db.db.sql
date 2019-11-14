@@ -1,0 +1,39 @@
+BEGIN TRANSACTION;
+CREATE TABLE IF NOT EXISTS "comments" (
+	"user"	INTEGER NOT NULL,
+	"post"	INTEGER NOT NULL,
+	"content"	TEXT NOT NULL,
+	"time"	TEXT
+);
+CREATE TABLE IF NOT EXISTS "likes" (
+	"user"	INTEGER NOT NULL,
+	"post"	INTEGER NOT NULL,
+	"time"	INTEGER NOT NULL
+);
+CREATE TABLE IF NOT EXISTS "saves" (
+	"user_id"	INTEGER NOT NULL,
+	"post_id"	INTEGER NOT NULL,
+	"time"	TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS "posted" (
+	"by_user"	INTEGER NOT NULL,
+	"post_id"	INTEGER UNIQUE,
+	"time"	TEXT NOT NULL,
+	PRIMARY KEY("post_id")
+);
+CREATE TABLE IF NOT EXISTS "user" (
+	"name"	TEXT NOT NULL UNIQUE,
+	"email"	TEXT NOT NULL UNIQUE,
+	"pwdhash"	TEXT,
+	"id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	"age"	INTEGER NOT NULL
+);
+CREATE TABLE IF NOT EXISTS "userroles" (
+	"user_id"	INTEGER NOT NULL,
+	"role_id"	INTEGER NOT NULL
+);
+CREATE TABLE IF NOT EXISTS "followings" (
+	"follower_id"	INTEGER,
+	"followee_id"	INTEGER
+);
+COMMIT;
