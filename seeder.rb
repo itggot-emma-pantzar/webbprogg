@@ -60,12 +60,13 @@ class Seeder
         SQL
 
         db.execute <<-SQL
-            CREATE TABLE IF NOT EXISTS "user" (
+            CREATE TABLE IF NOT EXISTS "users" (
                 "name"	TEXT NOT NULL UNIQUE,
                 "email"	TEXT NOT NULL UNIQUE,
                 "pwdhash"	TEXT,
                 "id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
-                "age"	INTEGER NOT NULL
+                "age"	INTEGER NOT NULL,
+                "username" TEXT NOT NULL UNIQUE
             );
         SQL
 

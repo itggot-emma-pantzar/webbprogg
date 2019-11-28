@@ -1,0 +1,11 @@
+- db = SQLite3::Database.new 'db/db.db'
+- db.execute('SELECT * FROM posted').each do |headline|
+    h4 #{headline}
+
+
+
+    - db.execute('SELECT * FROM users WHERE department_id = ?', department[0]).each do |employee|
+        
+        tr
+            td = employee[2]
+            td = employee[4]
