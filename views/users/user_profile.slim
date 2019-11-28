@@ -3,8 +3,9 @@ h1 Hejhejhej Detta är en user
 
 h3 = @user[0][-1]
 
-
-ul = @posts[0][-2]
+ul
+    - for post in @posts
+        li = post[3]
 
 
 / form action="/employees/#{@employee[0]}/delete" method="post"
