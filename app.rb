@@ -46,11 +46,8 @@ class App < Sinatra::Base
         @user = @db.execute("SELECT * FROM users WHERE id = ?", params['id'])
         @posts = @db.execute('SELECT * FROM posted WHERE by_user = ?', params['id'])
              
-        # @i=0
-        # while @i <= @posts.length
 
             slim :'users/user_profile'
-        # end
              
     end 
     
