@@ -7,7 +7,7 @@ class App < Sinatra::Base
 
     before do 
         @db = SQLite3::Database.new('db/db.db')
-        # @db.result_as_hash = true 
+        @db.results_as_hash = true 
         # @time = Time.now.to_s
     end 
 
@@ -58,12 +58,12 @@ class App < Sinatra::Base
             params['name'], params['age'], params['email'], params['id'], params['role_id'], params['img'])
         user_id = db.execute('SELECT id FROM users')
 
-        redirect "/users/user_profile/#{user_id}"
+        redirect "/users/user_profile/:user_id"
     end 
 
     get 'user/#{user_id}' do
         # visa user_profile
-        @users = db.execute('SELECT users.*, users.name as username
+        @users = db.execute('SELECT users.*,
             FROM users
             JOIN posts
             ON user.id = user_id;')
@@ -73,21 +73,40 @@ class App < Sinatra::Base
     get '/home' do 
         # visa hemskärm för user
         @user = @db.execute("SELECT * FROM users WHERE id = ?", 1)
-        @followee = @db.execute("SELECT * FROM followings where follower_id = ?", 1) 
-        @homescreen_post = @db.execute("
-            SELECT * FROM followings
-            JOIN posted
+        @followee = @db.execute("SELECT * FROM followings where followee_id = ?", 1) 
+        # @homescreen_post = @db.execute("
+        #     SELECT posted.headline as posted_headline 
+        #     FROM followings
+        #     JOIN posted
+        #     ON posted.by_user = followings.followee_id
+        #     WHERE followings.followee_id = ?", 1)
+        # p @homescreen_post
+        @homescreen_post = @db.execute("SELECT *
+            FROM followings 
+            JOIN posted 
             ON posted.by_user = followings.followee_id
-            WHERE followings.follower_id = ?", 1)
+            WHERE follower_id = ?", 1)
+        slim :home
     end 
 
+    post '/home' do
+        redirect '/home'
+    end 
+
+
     post '/post' do 
-    #    skapar en ny post
+    # visar en post
+        redirect '/post'
+
 
     end 
 
     get '/post' do 
         # visar den nya posten
+        @healine = @db.execute("SELECT *
+            FROM posted ")
+        # @post_id = @db.execute()
+            slim :post
     end 
 
     # post '/register' do 
